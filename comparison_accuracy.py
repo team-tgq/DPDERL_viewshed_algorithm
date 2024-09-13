@@ -7,8 +7,6 @@ import numpy as np
 
 import dem_data
 from main import analysis_by_dpderl_simplified, analysis_by_r3
-from output_veiwshed_grid import generate_viewable_raster
-from output_viewshed_grid_nochange import generate_viewable_raster_nochange
 
 data = []
 terrain_type_dict = {

@@ -65,8 +65,10 @@ class PartitionOptimalRLAlgorithm:
         # We need to think about the Y-axis
         if north_k == math.inf:
             end_y_index = self.max_y
+        else:
+            end_y_index = self.max_y if end_y_index > self.max_y else end_y_index
+
         start_y_index = self.min_y if start_y_index < self.min_y else start_y_index
-        end_y_index = self.max_y if end_y_index > self.max_y else end_y_index
         # The starting grid point is shifted down a few
         diff_y = self.y_grid_center - start_y_index
 
@@ -361,12 +363,13 @@ class PartitionOptimalRLAlgorithm:
         # 起始终止角度位于y轴
         if west_k == math.inf:
             start_x_index = self.x_grid_center
+        else:
+            start_x_index = self.min_x if start_x_index < self.min_x else start_x_index
 
         if east_k == math.inf:
             end_x_index = self.x_grid_center
-
-        start_x_index = self.min_x if start_x_index < self.min_x else start_x_index
-        end_x_index = self.max_x if end_x_index > self.max_x else end_x_index
+        else:
+            end_x_index = self.max_x if end_x_index > self.max_x else end_x_index
 
         diff_x = self.x_grid_center - start_x_index
 
@@ -649,11 +652,12 @@ class PartitionOptimalRLAlgorithm:
         # 需要考虑在y轴上的情况 此时不能直接用方程去表示
         if north_k == math.inf:
             start_y_index = self.max_y
+        else:
+            start_y_index = self.max_y if start_y_index > self.max_y else start_y_index
         if south_k == math.inf:
             end_y_index = self.min_y
-
-        start_y_index = self.max_y if start_y_index > self.max_y else start_y_index
-        end_y_index = self.min_y if end_y_index < self.min_y else end_y_index
+        else:
+            end_y_index = self.min_y if end_y_index < self.min_y else end_y_index
 
         # 计算起始格网点与中心格网点的偏移量
         diff_y = self.y_grid_center - start_y_index
@@ -942,12 +946,14 @@ class PartitionOptimalRLAlgorithm:
         # 起始终止角度位于y轴
         if west_k == math.inf:
             end_x_index = self.x_grid_center
+        else:
+            end_x_index = self.min_x if end_x_index < self.min_x else end_x_index
 
         if east_k == math.inf:
             start_x_index = self.x_grid_center
+        else:
+            start_x_index = self.max_x if start_x_index > self.max_x else start_x_index
 
-        start_x_index = self.max_x if start_x_index > self.max_x else start_x_index
-        end_x_index = self.min_x if end_x_index < self.min_x else end_x_index
 
         diff_x = self.x_grid_center - start_x_index
 
@@ -1509,9 +1515,10 @@ class PartitionOptimalRLAlgorithm:
         end_y_index = end_y_bound + self.is_observe_not_in_left_top_diagonal
         if north_k == math.inf:
             end_y_index = self.max_y
+        else:
+            end_y_index = self.max_y if end_y_index > self.max_y else end_y_index
 
         start_y_index = self.min_y if start_y_index < self.min_y else start_y_index
-        end_y_index = self.max_y if end_y_index > self.max_y else end_y_index
         # 计算起始格网点向下移动了几个
         diff_y = self.y_grid_center - start_y_index
 
@@ -1805,8 +1812,8 @@ class PartitionOptimalRLAlgorithm:
         # 起始终止角度位于y轴
         if west_k == math.inf:
             start_x_index = self.x_grid_center
-
-        start_x_index = self.min_x if start_x_index < self.min_x else start_x_index
+        else:
+            start_x_index = self.min_x if start_x_index < self.min_x else start_x_index
 
         diff_x = self.x_grid_center - start_x_index
 
@@ -2077,10 +2084,10 @@ class PartitionOptimalRLAlgorithm:
         # 需要考虑在y轴上的情况 此时不能直接用方程去表示
         if north_k == math.inf:
             end_y_index = self.max_y
+        else:
+            end_y_index = self.max_y if end_y_index > self.max_y else end_y_index
 
         start_y_index = self.min_y if start_y_index < self.min_y else start_y_index
-        end_y_index = self.max_y if end_y_index > self.max_y else end_y_index
-
         start_distance_y_index = 0
         y_grid_index = start_y_index
         x_distance_index = self.x_grid_count
@@ -2351,13 +2358,13 @@ class PartitionOptimalRLAlgorithm:
 
         x_grid_index = self.x_grid_center
 
-        # 计算起始边界搜索起点与终点索引
-        start_y_bound = int(x_grid_index * north_k + north_b)
-        start_y_index = start_y_bound + self.is_observe_not_in_right_bottom_diagonal + 1
-
         # 需要考虑在y轴上的情况 此时不能直接用方程去表示
         if north_k == math.inf:
             start_y_index = self.max_y
+        else:
+            # 计算起始边界搜索起点与终点索引
+            start_y_bound = int(x_grid_index * north_k + north_b)
+            start_y_index = start_y_bound + self.is_observe_not_in_right_bottom_diagonal + 1
 
         end_y_index = self.min_y
         start_y_index = self.max_y if start_y_index > self.max_y else start_y_index
@@ -2637,9 +2644,10 @@ class PartitionOptimalRLAlgorithm:
 
         if east_k == math.inf:
             end_x_index = self.x_grid_center
+        else:
+            end_x_index = self.max_x if end_x_index > self.max_x else end_x_index
 
         start_x_index = self.min_x if start_x_index < self.min_x else start_x_index
-        end_x_index = self.max_x if end_x_index > self.max_x else end_x_index
 
         diff_x = self.x_grid_center - start_x_index
 
